@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlashMemo — Flashcard Digital Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="logo">
+        <span class="logo-mark">⚡</span>
+        <span class="logo-text">Flash<span>Memo</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active" data-nav>Home</a>
+        <a href="#decks" class="nav-link" data-nav>My Decks</a>
+        <a href="#quiz" class="nav-link" data-nav>Quiz Mode</a>
+        <a href="#import" class="nav-link" data-nav>Import</a>
+        <a href="#export" class="nav-link" data-nav>Export</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary btn-ripple" id="navCreateBtn">+ Buat Flashcard</button>
+        <button class="theme-toggle" id="themeToggle" title="Dark mode">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="badge fade-in">🚀 Platform Belajar Modern</span>
+        <h1 class="hero-title fade-in">Belajar Lebih Cepat dengan <span class="gradient-text">Flashcard Digital</span></h1>
+        <p class="hero-sub fade-in">Buat, simpan, ulangi, dan kuasai materi dengan sistem flashcard interaktif.</p>
+        <div class="hero-btns fade-in">
+          <button class="btn btn-primary btn-lg btn-ripple" id="heroStartBtn">Mulai Sekarang</button>
+          <button class="btn btn-ghost btn-lg btn-ripple" id="heroDemoBtn">Coba Demo</button>
+        </div>
+        <div class="hero-stats fade-in">
+          <div><strong id="heroStatCards">0</strong><span>Flashcard</span></div>
+          <div><strong id="heroStatDecks">0</strong><span>Deck</span></div>
+          <div><strong id="heroStatStreak">0</strong><span>Hari Streak 🔥</span></div>
+        </div>
+      </div>
+
+      <div class="hero-illustration">
+        <div class="float-card fc-1"><div class="fc-inner"><div class="fc-front">Hello</div><div class="fc-back">Halo</div></div></div>
+        <div class="float-card fc-2"><div class="fc-inner"><div class="fc-front">E = mc²</div><div class="fc-back">Energi</div></div></div>
+        <div class="float-card fc-3"><div class="fc-inner"><div class="fc-front">1945</div><div class="fc-back">Merdeka</div></div></div>
+        <div class="hero-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CARD OF THE DAY ============ -->
+  <section class="container section">
+    <div class="cotd" id="cardOfDay">
+      <div class="cotd-label">✨ Random Card of the Day</div>
+      <div class="cotd-body" id="cotdBody">Belum ada flashcard. Buat dulu yuk!</div>
+    </div>
+  </section>
+
+  <!-- ============ STATISTIK ============ -->
+  <section class="container section" id="stats">
+    <h2 class="section-title">📊 Statistik Belajar</h2>
+    <div class="stats-grid">
+      <div class="stat-card slide-up"><div class="stat-icon">🃏</div><div class="stat-num" id="statTotalCards">0</div><div class="stat-label">Total Flashcard</div></div>
+      <div class="stat-card slide-up"><div class="stat-icon">📚</div><div class="stat-num" id="statTotalDecks">0</div><div class="stat-label">Total Deck</div></div>
+      <div class="stat-card slide-up"><div class="stat-icon">⭐</div><div class="stat-num" id="statFav">0</div><div class="stat-label">Favorit</div></div>
+      <div class="stat-card slide-up"><div class="stat-icon">🎯</div><div class="stat-num" id="statQuiz">0</div><div class="stat-label">Quiz Selesai</div></div>
+      <div class="stat-card slide-up"><div class="stat-icon">📈</div><div class="stat-num" id="statAcc">0%</div><div class="stat-label">Akurasi Belajar</div></div>
+      <div class="stat-card slide-up"><div class="stat-icon">⏱️</div><div class="stat-num" id="statTime">0m</div><div class="stat-label">Waktu Belajar</div></div>
+    </div>
+  </section>
+
+  <!-- ============ FORM BUAT FLASHCARD ============ -->
+  <section class="container section" id="create">
+    <h2 class="section-title">✍️ Buat Flashcard</h2>
+    <div class="form-card slide-up">
+      <form id="flashcardForm">
+        <input type="hidden" id="editId" value="" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Sisi Depan (Front)</label>
+            <textarea id="frontInput" placeholder="Tulis pertanyaan..." rows="3"></textarea>
+            <small class="err" id="errFront"></small>
+          </div>
+          <div class="form-group">
+            <label>Sisi Belakang (Back)</label>
+            <textarea id="backInput" placeholder="Tulis jawaban..." rows="3"></textarea>
+            <small class="err" id="errBack"></small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="categoryInput">
+              <option value="Bahasa">Bahasa</option>
+              <option value="Matematika">Matematika</option>
+              <option value="Sains">Sains</option>
+              <option value="Sejarah">Sejarah</option>
+              <option value="Umum">Umum</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tingkat Kesulitan</label>
+            <select id="difficultyInput">
+              <option value="Mudah">Mudah</option>
+              <option value="Sedang">Sedang</option>
+              <option value="Sulit">Sulit</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Deck</label>
+            <select id="deckInput"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Tag (pisahkan dengan koma)</label>
+          <input type="text" id="tagInput" placeholder="vocab, rumus, kerajaan" />
+        </div>
+
+        <div class="form-btns">
+          <button type="submit" class="btn btn-primary btn-ripple" id="saveBtn">Simpan Flashcard</button>
+          <button type="reset" class="btn btn-ghost btn-ripple" id="resetBtn">Reset</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ DECK SYSTEM ============ -->
+  <section class="container section" id="decks">
+    <div class="section-head">
+      <h2 class="section-title">📚 My Decks</h2>
+      <button class="btn btn-primary btn-sm btn-ripple" id="addDeckBtn">+ Tambah Deck</button>
+    </div>
+    <div class="deck-grid" id="deckGrid"></div>
+  </section>
+
+  <!-- ============ SEARCH & FILTER ============ -->
+  <section class="container section" id="viewer">
+    <h2 class="section-title">🗂️ Flashcard Saya</h2>
+    <div class="toolbar slide-up">
+      <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Cari flashcard..." />
+      <select id="filterCategory" class="toolbar-select">
+        <option value="">Semua Kategori</option>
+        <option value="Bahasa">Bahasa</option>
+        <option value="Matematika">Matematika</option>
+        <option value="Sains">Sains</option>
+        <option value="Sejarah">Sejarah</option>
+        <option value="Umum">Umum</option>
+      </select>
+      <select id="filterDifficulty" class="toolbar-select">
+        <option value="">Semua Tingkat</option>
+        <option value="Mudah">Mudah</option>
+        <option value="Sedang">Sedang</option>
+        <option value="Sulit">Sulit</option>
+      </select>
+      <select id="filterDeck" class="toolbar-select"><option value="">Semua Deck</option></select>
+      <label class="chk"><input type="checkbox" id="filterFav" /> ⭐ Favorit</label>
+      <select id="sortBy" class="toolbar-select">
+        <option value="new">Terbaru</option>
+        <option value="old">Lama</option>
+        <option value="az">A - Z</option>
+      </select>
+    </div>
+    <div class="card-grid" id="cardGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="empty-icon">📭</div>
+      <p>Belum ada flashcard yang cocok. Buat flashcard pertamamu!</p>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ MODE ============ -->
+  <section class="container section" id="quiz">
+    <h2 class="section-title">🎯 Quiz Mode</h2>
+    <div class="quiz-wrap slide-up">
+      <div class="quiz-setup" id="quizSetup">
+        <p>Uji hafalanmu! Sistem akan mengambil flashcard secara acak.</p>
+        <div class="quiz-options">
+          <select id="quizDeck" class="toolbar-select"><option value="">Semua Deck</option></select>
+          <label class="chk"><input type="checkbox" id="quizShuffle" checked /> 🔀 Shuffle</label>
+          <label class="chk"><input type="checkbox" id="quizTimer" /> ⏱️ Timer</label>
+          <label class="chk"><input type="checkbox" id="quizRepeatWrong" checked /> 🔁 Ulang yang salah</label>
+        </div>
+        <button class="btn btn-primary btn-lg btn-ripple" id="startQuizBtn">Mulai Quiz</button>
+      </div>
+
+      <div class="quiz-active" id="quizActive" style="display:none">
+        <div class="quiz-progress-row">
+          <span id="quizCounter">1 / 1</span>
+          <span id="quizTimerDisplay" class="quiz-timer"></span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="quizProgress"></div></div>
+
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-card-inner" id="quizCardInner">
+            <div class="quiz-card-front"><span class="quiz-meta" id="quizCatBadge"></span><p id="quizFront"></p></div>
+            <div class="quiz-card-back"><p id="quizBack"></p></div>
+          </div>
+        </div>
+
+        <div class="quiz-controls">
+          <button class="btn btn-ghost btn-ripple" id="quizFlipBtn">👁️ Lihat Jawaban</button>
+          <div class="quiz-answer-btns" id="quizAnswerBtns" style="display:none">
+            <button class="btn btn-correct btn-ripple" id="quizCorrectBtn">✅ Benar</button>
+            <button class="btn btn-wrong btn-ripple" id="quizWrongBtn">❌ Salah</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult" style="display:none">
+        <div class="result-emoji" id="resultEmoji">🎉</div>
+        <h3>Quiz Selesai!</h3>
+        <div class="result-score" id="resultScore">0%</div>
+        <div class="result-detail">
+          <span>✅ Benar: <strong id="resultCorrect">0</strong></span>
+          <span>❌ Salah: <strong id="resultWrong">0</strong></span>
+        </div>
+        <button class="btn btn-primary btn-ripple" id="quizRestartBtn">Ulangi Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMPORT / EXPORT ============ -->
+  <section class="container section" id="import">
+    <h2 class="section-title">📥 Import & 📤 Export</h2>
+    <div class="ie-grid">
+      <div class="ie-card slide-up">
+        <h3>📥 Import</h3>
+        <p>Upload file JSON atau TXT untuk menambah flashcard.</p>
+        <input type="file" id="importFile" accept=".json,.txt" class="file-input" />
+        <small class="ie-hint">Format TXT: <code>depan | belakang</code> per baris</small>
+      </div>
+      <div class="ie-card slide-up" id="export">
+        <h3>📤 Export</h3>
+        <p>Simpan flashcard kamu ke file.</p>
+        <div class="form-btns">
+          <button class="btn btn-primary btn-ripple" id="exportJsonBtn">Export JSON</button>
+          <button class="btn btn-ghost btn-ripple" id="exportTxtBtn">Export TXT</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>⚡ <strong>FlashMemo</strong> — Belajar lebih cepat, ingat lebih lama.</p>
+    <p class="footer-sub">Data tersimpan otomatis di browser kamu (LocalStorage).</p>
+  </footer>
+
+  <!-- ============ SHARE MODAL ============ -->
+  <div class="modal-overlay" id="shareModal">
+    <div class="modal">
+      <button class="modal-close" id="shareClose">×</button>
+      <h3>🔗 Bagikan Flashcard</h3>
+      <div class="share-link-box">
+        <input type="text" id="shareLink" readonly />
+        <button class="btn btn-primary btn-sm btn-ripple" id="copyLinkBtn">Copy</button>
+      </div>
+      <div class="share-btns">
+        <a href="#" class="btn btn-wa btn-ripple" id="shareWa">📱 WhatsApp</a>
+        <a href="#" class="btn btn-tg btn-ripple" id="shareTg">✈️ Telegram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ============ CONFETTI CANVAS ============ -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
